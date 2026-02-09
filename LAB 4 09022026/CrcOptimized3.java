@@ -1,13 +1,11 @@
 import java.util.Scanner;
 
-public class CrcOptimized2 {
+public class CrcOptimized3 {
     static char[] subtract(char[] a, char[] b)
     {
         char[] ans = new char[a.length];
         for(int i = a.length-1; i>=0;i--)
-        {
             ans[i] = (a[i] == b[i]) ? '0' : '1';
-        }
         return ans;
     }
 
@@ -17,39 +15,29 @@ public class CrcOptimized2 {
         int dataLength = data.length();
         char[] temp = data.substring(0, divisorLength).toCharArray();
         char[] divisorArray = divisor.toCharArray();
-        char[] zeroArray = "0".repeat(divisorLength).toCharArray();
-        char[] ansSubtract=null;
         int i,j;
         for(i=divisorLength-1;i<dataLength;i++)
         {
             if(temp[0]=='1')
             {
-                ansSubtract = subtract(temp, divisorArray);
-
+                temp = subtract(temp, divisorArray);
             }
-            else
-            {
-                ansSubtract = subtract(temp, zeroArray);
-            }
-            // System.out.println(ansSubtract);
             if(i<dataLength-1)
             {
                 for(j=1;j<divisorLength;j++)
                 {
-                    temp[j-1]=ansSubtract[j];
+                    temp[j-1]=temp[j];
                 }
                 temp[j-1]= data.charAt(i+1);
             }
         }
-
-        return new String(ansSubtract,1,divisorLength-1);
+        return new String(temp,1,divisorLength-1);
     }
 
     static String generateCrc(String data, String divisor)
     {
         StringBuilder adjustedData = new StringBuilder(data);
         adjustedData.append("0".repeat(divisor.length()-1));
-
         String remainder = divide(adjustedData.toString(), divisor);
         return data+remainder;
     }
@@ -64,7 +52,6 @@ public class CrcOptimized2 {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter Data : ");
         String data = sc.next()+sc.nextLine();
-
         System.out.print("Enter Divisor : ");
         String divisor = sc.next()+sc.nextLine();
 
@@ -76,12 +63,8 @@ public class CrcOptimized2 {
         String receivedCodeWord = sc.next()+sc.nextLine();
 
         if(checkCrc(receivedCodeWord, divisor))
-        {
             System.out.println("Correct Data");
-        }
         else
-        {
             System.out.println("Invalid data");
-        }
     }
 }
