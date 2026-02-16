@@ -3,9 +3,9 @@ import java.util.Scanner;
 public class CrcOptimized4 {
 
     static boolean isBinary(String s) {
-        return s.matches("1[01]+");
+        return s.matches("[0]|(1[01]*)");
     }
-    
+
     static char[] subtract(char[] a, char[] b)
     {
         char[] ans = new char[a.length];
@@ -50,7 +50,7 @@ public class CrcOptimized4 {
     static boolean checkCrc(String data, String divisor)
     {
         if(data.length() < divisor.length())
-        return false;
+            return false;
         String remainder = divide(data, divisor);
         return !remainder.contains("1");
     }
