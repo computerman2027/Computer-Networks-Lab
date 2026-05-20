@@ -7,13 +7,14 @@ public class MyServer {
         try{
             ServerSocket ss = new ServerSocket(6666);
 
+            System.out.printf("SERVER READY AT PORT = %s\n",ss.getLocalSocketAddress());
             Socket s = ss.accept();
 
             DataInputStream dis = new DataInputStream(s.getInputStream());
 
             String str = (String)dis.readUTF();
 
-            System.out.printf("Message = %s\n",dis);
+            System.out.printf("Message = %s\n",str);
 
             ss.close();
         }
